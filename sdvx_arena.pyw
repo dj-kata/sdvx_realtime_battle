@@ -319,6 +319,7 @@ class ScoreSenderApp:
         self.rooms_data = []
         
         # ゲーム状態
+        self.finished = True # 1曲の終了時にTrue、リザルト画面まで行ったらFalse
         self.is_playing = False
         self.last_score_normal = 0
         self.last_score_ex = 0
@@ -488,11 +489,12 @@ class ScoreSenderApp:
                                     self.send_score(normal_score, ex_score)
                                     self.last_score_normal = normal_score
                                     self.last_score_ex = ex_score
-                        
                         elif was_playing and not self.is_playing:
                             # プレイ終了を検出
                             print("プレイ終了を検出 - 曲終了処理を実行")
                             self.finish_song()
+                        if not self.finished and self.is_onresult():
+                            self.finished = True
                 
                 # 接続状態更新
                 self.root.after(0, self.update_obs_status)
@@ -591,7 +593,13 @@ class ScoreSenderApp:
         return None
     
     def is_onplay(self, image):
-        return is_onplay(image)
+        if not self.finished:
+            return False
+        else:
+            return is_onplay(image)
+    
+    def is_onresult(self, image):
+        return is_onresult(image)
     
     def get_score(self, image):
         return get_score(image), get_exscore(image)  # normal_score, ex_score

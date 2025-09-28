@@ -80,12 +80,10 @@ def is_onresult(img):
         bool: リザルト画面かどうか
     """
     cr = img.crop((340,1600,539,1639))
-    cr.save('v1.png')
     tmp = imagehash.average_hash(cr)
     val0 = abs(hash_onresult - tmp) <5 
 
     cr = img.crop((30,1390,239,1429))
-    cr.save('v2.png')
     tmp = imagehash.average_hash(cr)
     img_j = Image.open('resources/onresult2.png')
     hash_target = imagehash.average_hash(img_j)
