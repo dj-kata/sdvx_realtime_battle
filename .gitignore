@@ -1,1 +1,3 @@
 sdvx_arena.spec
+build/*
+sdvx_arena/*
