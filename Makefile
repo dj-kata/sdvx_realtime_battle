@@ -3,7 +3,7 @@ project_name=sdvx_arena
 target=$(project_name)/$(project_name).exe
 target_zip=$(project_name).zip
 srcs=$(subst update.py,,$(wildcard *.py)) $(wildcard *.pyw)
-html_files=$(wildcard *.html)
+resource_files=$(wildcard resources/*)
 
 # バージョンを自動取得（Gitタグから）
 GIT_VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo "0.0.0-dev")
@@ -22,11 +22,11 @@ endif
 
 all: $(target_zip)
 
-$(target_zip): $(target) resources $(project_name)/update.exe
+$(target_zip): $(target) $(resource_files) $(project_name)/update.exe
 	@mkdir -p $(project_name)
 	@rm -rf $(project_name)/log
-	@cp -a resources $(project_name)
-	@zip $(target_zip) $(project_name)/*
+	@cp -a resources $(project_name)/
+	@zip $(target_zip) $(project_name)/* $(project_name)/*/*
 
 # バージョンファイルを自動生成
 version.py: .git/refs/tags/* .git/HEAD
