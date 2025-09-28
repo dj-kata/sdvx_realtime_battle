@@ -7,6 +7,7 @@ import sys
 hash_onplay1  = imagehash.average_hash(Image.open('resources/onplay1.png'))
 hash_onplay2  = imagehash.average_hash(Image.open('resources/onplay2.png'))
 hash_onresult = imagehash.average_hash(Image.open('resources/onresult.png'))
+hash_onresult2 = imagehash.average_hash(Image.open('resources/onresult2.png'))
 #hash_is_select = imagehash.average_hash(Image.open('layout/is_select.png'))
 
 # hash版
@@ -85,9 +86,7 @@ def is_onresult(img):
 
     cr = img.crop((30,1390,239,1429))
     tmp = imagehash.average_hash(cr)
-    img_j = Image.open('resources/onresult2.png')
-    hash_target = imagehash.average_hash(img_j)
-    val1 = abs(hash_target - tmp) < 5
+    val1 = abs(hash_onresult2 - tmp) < 5
 
     ret = val0 & val1
     return ret

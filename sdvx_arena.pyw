@@ -150,7 +150,7 @@ class SettingsWindow:
         rotate_frame = ttk.Frame(other_frame)
         rotate_frame.grid(row=0, column=1, sticky="w", pady=2)
         
-        rotate_options = [("左回転", 0), ("回転なし", 1), ("右回転", 2)]
+        rotate_options = [("頭が右", 0), ("回転なし", 1), ("頭が左", 2)]
         for i, (text, value) in enumerate(rotate_options):
             ttk.Radiobutton(rotate_frame, text=text, variable=self.rotate_mode_var, 
                            value=value).pack(side="left", padx=(0, 10))
@@ -492,8 +492,9 @@ class ScoreSenderApp:
                         elif was_playing and not self.is_playing:
                             # プレイ終了を検出
                             print("プレイ終了を検出 - 曲終了処理を実行")
+                            self.finished = False
                             self.finish_song()
-                        if not self.finished and self.is_onresult():
+                        if (not self.finished) and self.is_onresult(img):
                             self.finished = True
                 
                 # 接続状態更新
